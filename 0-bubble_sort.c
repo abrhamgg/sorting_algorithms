@@ -17,7 +17,6 @@ void bubble_sort(int *array, size_t size)
 		{
 			if (j + 1 == size)
 			{
-				print_array(array, size);
 				continue;
 			}
 			else
