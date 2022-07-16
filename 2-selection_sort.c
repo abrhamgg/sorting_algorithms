@@ -3,7 +3,7 @@
 /**
  * selection_sort - function that sorts an array in ascending order
  * @array: input array.
- * size: size of the array
+ * @size: size of the array
  * Return: prints the array in every operation
  */
 
