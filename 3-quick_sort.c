@@ -2,22 +2,6 @@
 #include <stdio.h>
 
 /**
- * swap - function which swaps to integers
- * @n2: input 1
- * @n2: input 2
- * Return: void
- */
-
-void swap(int *array,int n1, int n2)
-{
-	int temp;
-
-	temp = array[n1];
-	array[n1] = array[n2];
-	array[n2] = temp;
-}
-
-/**
  * partition - function that sorts an element using Lomuto algorithm.
  * @array: input
  * @size: size of the array
@@ -25,21 +9,47 @@ void swap(int *array,int n1, int n2)
 
 int partition(int *array, int low, int high)
 {
-	int pivot = high;
-	int j = low;
+	int pivot = array[high];
+	int j;
 	int i = -1;
-	size_t tmp;
+	int tmp;
 
-	for (j = low; j <= high - 1; j++)
+	for (j = low; j <= high; j++)
 	{
-		if (array[j] > array[pivot])
+		if (array[j] >= pivot)
 		{
 			i++;
-			swap(array, array[i], array[j]);
+			tmp = array[i];
+			printf("%i....\n", tmp);
+			array[i] = array[j];
+			array[j] = tmp;
+			printf("%i %i....\n", array[i], array[j]);
+			print_array(array, high);
 		}
 	}
-	swap(array, array[i + 1], array[pivot]);
+	printf("%i......\n",pivot);
+	tmp = array[high];
+	array[high] = array[i + 1];
+	array[i + 1] = tmp;
+	print_array(array, high);
 	return (i);
+}
+
+
+/**
+ * recursive_sort - function that recursievly sort an array
+ * @index: pivot value
+ * @size: size of the array
+ * Return: void
+ */
+void recursive_sort(int *array, int low, int r_size)
+{
+	int pivot;
+
+	pivot = partition(array, low, r_size);
+
+	recursive_sort(array, 0, pivot - 1);
+	recursive_sort(array, pivot + 1, r_size);
 }
 
 /**
@@ -48,14 +58,9 @@ int partition(int *array, int low, int high)
  * @size: size of the array
  * Return: prints the array in every operation.
  */
-
 void quick_sort(int *array, size_t size)
 {
-	size_t high = size - 1;
-	int low = 0;
-
-	int pi = partition(array, low, high);
-	printf("%i\n", array[pi]);
-
-
+	if (array == NULL || size <= 1)
+		return;
+	recursive_sort(array, 0, size - 1);
 }

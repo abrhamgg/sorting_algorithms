@@ -1,14 +1,42 @@
 #include "sort.h"
-#include <stdio.h>
 
+void swap(listint_t **head, listint_t *node1, listint_t *node2);
 /**
- * swap - swaps to node
- * @head: the head node
- * @node1: the first node
- * @node2: second node
+ * insertion_sort_list - sorts a doubly linked list with
+ * the insertion sort algorithm
+ *
+ * @list: list to be sorted
+ *
  * Return: void
  */
+void insertion_sort_list(listint_t **list)
+{
+	listint_t *forw, *tmp;
 
+	if (list == NULL || *list == NULL || (*list)->next == NULL)
+		return;
+
+	for (forw = (*list)->next; forw && forw->prev; forw = forw->next)
+	{
+		for (; forw && forw->prev && forw->n < forw->prev->n;
+		     forw = forw->prev)
+		{
+			tmp = forw->prev;
+			swap(list, tmp, forw);
+			print_list(*list);
+			forw = forw->next;
+		}
+	}
+}
+
+/**
+ * swap - swaps two nodes
+ * @head: the head node
+ * @node1: The first node
+ * @node2: the second node
+ *
+ * Return: void
+ */
 void swap(listint_t **head, listint_t *node1, listint_t *node2)
 {
 	listint_t *prev, *next;
@@ -27,29 +55,4 @@ void swap(listint_t **head, listint_t *node1, listint_t *node2)
 	node2->next = node1;
 	if (next)
 		next->prev = node1;
-}
-/**
- * insertion_sort_list - function that sorts a doubly
- * linked list of integers in ascending order
- * @list: doubly linked list
- * Return: print sorted list
- */
-void insertion_sort_list(listint_t **list)
-{
-	listint_t *current = *list;
-	listint_t *tmp;
-
-	if (list == NULL || (*list) == NULL)
-		return;
-
-	while (current != NULL)
-	{
-		while (current->prev != NULL && current->n < current->prev->n)
-		{
-			tmp = current->prev;
-			swap(list, tmp, current);
-			print_list(*list);
-		}
-		current = current->next;
-	}
 }
