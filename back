@@ -1,0 +1,23 @@
+int pivot = array[high];
+	int i;
+	int p_index = low;
+	int tmp;
+
+	printf("%i pindex.....\n", p_index);
+	for (i = low; i <= high; i++)
+	{
+		if (array[i] <= pivot)
+		{
+			p_index++;
+			tmp = array[i];
+			array[i] = array[p_index];
+			array[p_index] = tmp;
+			print_array(array, high);
+			
+		}
+	}
+	tmp = array[high];
+	array[high] = array[p_index];
+	array[p_index] = tmp;
+	print_array(array, high);
+	return (p_index);
